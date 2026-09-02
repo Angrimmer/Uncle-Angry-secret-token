@@ -1,0 +1,37 @@
+{
+  "id": "uncle-angry-secret-token",
+  "title": "Uncle Angry Secret Token",
+  "description": "Ajoute des barres de ressource supplémentaires sur les tokens, au-delà de bar1/bar2, indépendant de tout système de jeu.",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Angrimmer"
+    }
+  ],
+  "esmodules": [
+    "module/uncle-angry-secret-token.mjs"
+  ],
+  "styles": [
+    "css/uncle-angry-secret-token.css"
+  ],
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "url": "https://github.com/Angrimmer/Uncle-Angry-secret-token",
+  "manifest": "https://github.com/Angrimmer/Uncle-Angry-secret-token/releases/latest/download/module.json",
+  "download": "https://github.com/Angrimmer/Uncle-Angry-secret-token/releases/latest/download/module.zip"
+}

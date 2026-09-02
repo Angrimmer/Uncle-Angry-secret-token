@@ -1,0 +1,44 @@
+{
+  "UAST": {
+    "ExtraBars": {
+      "Legend": "Additional resource bars",
+      "Label": "Bar {n}",
+      "Add": "Add a bar",
+      "Remove": "Remove",
+      "SideBottom": "Bottom",
+      "SideTop": "Top",
+      "SideHint": "Stack below the health bar, or above the second bar",
+      "ColorEmpty": "Empty color",
+      "ColorFull": "Full color",
+      "SourceAttribute": "Existing attribute",
+      "SourceManual": "Manual counter",
+      "ManualLabelPlaceholder": "Label (e.g. Combo points)",
+      "ManualValue": "Current value",
+      "ManualMax": "Maximum value",
+      "ManualBarFallbackLabel": "Counter"
+    },
+    "Roles": {
+      "Legend": "Hover role (non-owner)",
+      "None": "None",
+      "Life": "Life",
+      "Energy": "Energy"
+    },
+    "Tiers": {
+      "Summary": "Hover text",
+      "Threshold": "Tier {n}",
+      "DefaultLife1": "In great shape",
+      "DefaultLife2": "Healthy",
+      "DefaultLife3": "Wounded",
+      "DefaultLife4": "Hanging by a thread",
+      "DefaultEnergy1": "Bursting with energy",
+      "DefaultEnergy2": "Still has energy",
+      "DefaultEnergy3": "Tired",
+      "DefaultEnergy4": "Exhausted"
+    },
+    "NativeBars": {
+      "Legend": "Native bars (bar 1 / bar 2)",
+      "Bar1Label": "Bar 1",
+      "Bar2Label": "Bar 2"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "UAST": {
+    "ExtraBars": {
+      "Legend": "Barres de ressource supplémentaires",
+      "Label": "Barre {n}",
+      "Add": "Ajouter une barre",
+      "Remove": "Supprimer",
+      "SideBottom": "Bas",
+      "SideTop": "Haut",
+      "SideHint": "Empiler sous la barre de vie, ou au-dessus de la deuxième barre",
+      "ColorEmpty": "Couleur à vide",
+      "ColorFull": "Couleur pleine",
+      "SourceAttribute": "Attribut existant",
+      "SourceManual": "Compteur manuel",
+      "ManualLabelPlaceholder": "Étiquette (ex: Points de combo)",
+      "ManualValue": "Valeur actuelle",
+      "ManualMax": "Valeur maximale",
+      "ManualBarFallbackLabel": "Compteur"
+    },
+    "Roles": {
+      "Legend": "Rôle affiché au survol (non-propriétaire)",
+      "None": "Aucun",
+      "Life": "Vie",
+      "Energy": "Énergie"
+    },
+    "Tiers": {
+      "Summary": "Texte au survol",
+      "Threshold": "Palier {n}",
+      "DefaultLife1": "En pleine forme",
+      "DefaultLife2": "En bon état",
+      "DefaultLife3": "Blessée",
+      "DefaultLife4": "Ne tient qu'à un fil",
+      "DefaultEnergy1": "Débordante d'énergie",
+      "DefaultEnergy2": "Encore de l'énergie",
+      "DefaultEnergy3": "Fatiguée",
+      "DefaultEnergy4": "Éreintée"
+    },
+    "NativeBars": {
+      "Legend": "Barres natives (bar 1 / bar 2)",
+      "Bar1Label": "Barre 1",
+      "Bar2Label": "Barre 2"
+    }
+  }
+}
