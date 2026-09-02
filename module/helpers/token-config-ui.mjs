@@ -73,12 +73,17 @@ async function patchNativeBar(tokenDoc, barKey, patch) {
  * Fixed 4 seed phrases (2 for "life" wording, 2 shared as a generic
  * fallback) - a starting point the GM edits, not a fixed vocabulary. Every
  * bar's tiers are fully independent once created (see hover-status.mjs).
+ * `manualMax`, when given, scales the seed thresholds to that bar's own
+ * max instead of a 0-100 percentage - see buildRoleAndTiersField.
  */
-function defaultTiersFor(role) {
+function defaultTiersFor(role, manualMax) {
   const keys = role === "energy"
     ? ["DefaultEnergy1", "DefaultEnergy2", "DefaultEnergy3", "DefaultEnergy4"]
     : ["DefaultLife1", "DefaultLife2", "DefaultLife3", "DefaultLife4"];
-  const thresholds = [75, 50, 25, 0];
+  const percents = [75, 50, 25, 0];
+  const thresholds = manualMax
+    ? percents.map(p => Math.round((p / 100) * manualMax))
+    : percents;
   return keys.map((key, i) => ({ threshold: thresholds[i], text: game.i18n.localize(`UAST.Tiers.${key}`) }));
 }
 
@@ -89,8 +94,14 @@ function defaultTiersFor(role) {
  * `onPatch` persists a partial patch into that same object. `rerender`
  * re-renders the whole Resources tab, needed only when the tiers editor's
  * very presence changes (role picked/cleared), not on every keystroke.
+ * `manualMax` is null/undefined for a percentage-based bar (native bar1/
+ * bar2, or an "attribute"-source extra bar) - a percentage doesn't mean
+ * anything for an arbitrary manual counter (e.g. "exactly 5 of 10 combo
+ * points"), so a manual bar's own configured max is passed here instead,
+ * switching the tier thresholds to raw value comparisons (see
+ * hover-status.mjs#buildLines) and bounding/labelling the inputs to match.
  */
-function buildRoleAndTiersField(config, onPatch, rerender) {
+function buildRoleAndTiersField(config, onPatch, rerender, manualMax) {
   const role = config?.role ?? "";
   const roleSelect = foundry.applications.fields.createSelectInput({
     name: `uast-role-${foundry.utils.randomID()}`,
@@ -109,14 +120,15 @@ function buildRoleAndTiersField(config, onPatch, rerender) {
     const patch = { role: roleSelect.value || null };
     // Seed default tiers only the first time a role is picked - never
     // clobber tier text the GM already wrote.
-    if (roleSelect.value && !config?.tiers) patch.tiers = defaultTiersFor(roleSelect.value);
+    if (roleSelect.value && !config?.tiers) patch.tiers = defaultTiersFor(roleSelect.value, manualMax);
     await onPatch(patch);
     rerender();
   });
 
   let tiersBlock = null;
   if (role) {
-    const tiers = config.tiers ?? defaultTiersFor(role);
+    const tiers = config.tiers ?? defaultTiersFor(role, manualMax);
+    const thresholdMax = manualMax || 100;
     tiersBlock = document.createElement("details");
     tiersBlock.className = "uast-tiers";
     tiersBlock.innerHTML = `<summary>${game.i18n.localize("UAST.Tiers.Summary")}</summary>`;
@@ -129,7 +141,7 @@ function buildRoleAndTiersField(config, onPatch, rerender) {
         name: `uast-tier-threshold-${foundry.utils.randomID()}`,
         value: isLast ? 0 : tier.threshold,
         min: 0,
-        max: 100,
+        max: thresholdMax,
         step: 1
       });
       threshold.disabled = isLast; // last slot is always the catch-all (>= 0)
@@ -138,6 +150,12 @@ function buildRoleAndTiersField(config, onPatch, rerender) {
         next[i] = { ...next[i], threshold: Number(threshold.value) || 0 };
         onPatch({ tiers: next });
       });
+
+      // Visual disambiguation the GM asked for - a bare number reads as
+      // ambiguous (percentage? raw value?) without this.
+      const suffix = document.createElement("span");
+      suffix.className = "uast-tier-suffix";
+      suffix.textContent = manualMax ? `/ ${manualMax}` : "%";
 
       const text = foundry.applications.fields.createTextInput({
         name: `uast-tier-text-${foundry.utils.randomID()}`,
@@ -151,7 +169,7 @@ function buildRoleAndTiersField(config, onPatch, rerender) {
 
       tiersBlock.append(foundry.applications.fields.createFormGroup({
         label: game.i18n.format("UAST.Tiers.Threshold", { n: i + 1 }),
-        input: [threshold, text]
+        input: [threshold, suffix, text]
       }));
     }
   }
@@ -254,7 +272,8 @@ function buildRow(app, tokenDoc, context, extraBars, index) {
   const { roleSelect, tiersBlock } = buildRoleAndTiersField(
     entry,
     patch => patchEntry(tokenDoc, index, patch),
-    () => app.render({ parts: ["resources"] })
+    () => app.render({ parts: ["resources"] }),
+    source === "manual" ? (Number(entry.max) || 10) : undefined
   );
 
   const wrapper = document.createElement("div");

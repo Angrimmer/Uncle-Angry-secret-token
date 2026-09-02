@@ -22,9 +22,9 @@ function resolveNativeBarData(tokenDoc, barKey) {
   return data;
 }
 
-function pickTierText(tiers, pct) {
+function pickTierText(tiers, basis) {
   if (!Array.isArray(tiers) || !tiers.length) return null;
-  const hit = tiers.find(t => pct >= (t?.threshold ?? 0));
+  const hit = tiers.find(t => basis >= (t?.threshold ?? 0));
   return hit?.text || null;
 }
 
@@ -43,13 +43,13 @@ function resolveRoleBars(tokenDoc) {
     if (!cfg?.role) continue;
     const data = resolveNativeBarData(tokenDoc, barKey);
     if (!data) continue;
-    candidates.push({ role: cfg.role, tiers: cfg.tiers, data });
+    candidates.push({ role: cfg.role, tiers: cfg.tiers, data, isManual: false });
   }
   for (const entry of getExtraBars(tokenDoc)) {
     if (!entry.role) continue;
     const data = resolveBarData(tokenDoc, entry);
     if (!data) continue;
-    candidates.push({ role: entry.role, tiers: entry.tiers, data });
+    candidates.push({ role: entry.role, tiers: entry.tiers, data, isManual: entry.source === "manual" });
   }
 
   const result = { life: null, energy: null };
@@ -60,13 +60,21 @@ function resolveRoleBars(tokenDoc) {
   return result;
 }
 
+/**
+ * A percentage makes sense for an attribute-based bar (health-like, scale
+ * independent of the actual max), but not for a manual counter with
+ * meaningful absolute thresholds (e.g. "exactly 5 of 10 combo points to
+ * unleash an attack") - manual bars compare tiers against the raw clamped
+ * value instead, native/attribute bars against a 0-100 percentage.
+ */
 function buildLines(tokenDoc) {
   const { life, energy } = resolveRoleBars(tokenDoc);
   const lines = [];
   for (const entry of [life, energy]) {
     if (!entry) continue;
-    const pct = (Math.clamp(entry.data.value, 0, entry.data.max) / entry.data.max) * 100;
-    const text = pickTierText(entry.tiers, pct);
+    const clamped = Math.clamp(entry.data.value, 0, entry.data.max);
+    const basis = entry.isManual ? clamped : (clamped / entry.data.max) * 100;
+    const text = pickTierText(entry.tiers, basis);
     if (text) lines.push(text);
   }
   return lines;
