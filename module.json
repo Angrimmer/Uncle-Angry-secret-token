@@ -2,7 +2,7 @@
   "id": "uncle-angry-secret-token",
   "title": "Uncle Angry Secret Token",
   "description": "Ajoute des barres de ressource supplémentaires sur les tokens, au-delà de bar1/bar2, indépendant de tout système de jeu.",
-  "version": "0.0.1",
+  "version": "0.80",
   "compatibility": {
     "minimum": "13",
     "verified": "14",
