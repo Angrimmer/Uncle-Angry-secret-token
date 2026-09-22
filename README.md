@@ -35,6 +35,8 @@ Vous pouvez aussi télécharger la dernière version depuis l'onglet [Releases](
 
 Foundry limite chaque token à exactement deux barres de ressource. J'en avais besoin de plus pour certains personnages avec des mécaniques bien à eux, alors j'ai construit ce module pour lever cette limite — sans toucher au cœur de Foundry, juste par-dessus.
 
+L'idée du statut narratif au survol — permettre aux alliés de vérifier l'état de leurs compagnons sans voir leurs vraies barres — m'a été inspirée par un autre module dont je ne me souviens malheureusement plus le nom.
+
 ## Langues
 
 Français (complet), anglais (complet).

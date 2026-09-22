@@ -35,6 +35,8 @@ You can also download the latest version from this repository's [Releases](../..
 
 Foundry limits every token to exactly two resource bars. I needed more for some characters with mechanics of their own, so I built this module to lift that limit — without touching Foundry's core, just building on top of it.
 
+The idea behind the narrative status on hover — letting allies check on their companions' condition without seeing their actual bars — was inspired by another module whose name I unfortunately don't remember.
+
 ## Languages
 
 French (complete), English (complete).
