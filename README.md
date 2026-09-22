@@ -48,3 +48,5 @@ Toute suggestion ou retour d'expérience est le bienvenu, n'hésitez pas à ouvr
 ## Soutenir le projet
 
 Si ce module vous a été utile, un petit coup de pouce sur [Ko-fi](https://ko-fi.com/angrimmer) fait toujours plaisir. Aucune obligation, bien sûr !
+
+Pour ce qui est de l'utilisation de l'IA, elle m'aide notamment pour des tâches d'automatisation et de confort.

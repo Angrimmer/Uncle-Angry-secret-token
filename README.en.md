@@ -48,3 +48,5 @@ Any suggestion or feedback is welcome, feel free to open an [issue](../../issues
 ## Support the project
 
 If this module has been useful to you, a small tip on [Ko-fi](https://ko-fi.com/angrimmer) is always appreciated. No obligation, of course!
+
+As for AI use, it mainly helps me with automation and quality-of-life tasks.
